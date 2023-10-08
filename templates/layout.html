@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <html lang="eng" data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>YB Blog</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+         
+         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"></link>
+    </head>
+    <body>
+        {% include "includes/navbar2.html" %}
+
+       
+        
+        
+        <div style = "margin-top : 100px; margin-bottom : 100px;" class = "container">
+           
+         {% if messages %}
+        
+        {% for message in messages %}
+        {% if message.tags == "info" %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% else %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endif %}
+        
+        {% endfor %}
+        
+        {% endif %}
+
+           {% block body %}
+           
+           {% endblock body %}
+
+    
+        </div>
+
+             
+            
+            <script src="{% static 'js/bootsrap.min.js' %}"></script>
+            <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+
+    </body>
+</html>
+
+

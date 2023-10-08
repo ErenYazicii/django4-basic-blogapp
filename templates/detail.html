@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h2 class="fw-bolder mb-1">{{article.title}}</h2>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">by {{article.author.username}},{{article.created_date}}</div>
+                            
+
+                        </header>
+                        <!-- Preview image figure-->
+                        {% if article.article_image %}
+                        <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt="" style="height:500px; width:500px;"></a>
+                        {% endif %}
+                        <!-- Post content-->
+                        <section class="mb-5">
+                        <br>
+                        <h5 style="font-style: italic">{{article.content|safe}}</h5>
+                        
+                        
+                    </article>
+                    
+                </div>
+                
+                   
+                    
+            
+        </div>
+        {% if comments %}
+        <!-- Single comment-->
+        {% for comment in comments %}
+       <div class="media mb-4">
+       <div class="col-lg-6">
+          <img class="d-flex mr-4 rounded-circle" src="https://cdn.imgbin.com/0/5/18/imgbin-computer-icons-user-profile-avatar-social-media-avatar-tuhZ4cJcBTPwggCgW3LJQ6cSk.jpg" alt=""style="width:30px;">
+          </div>
+          <div class="media-body">
+            <h5 class="mt-0">{{comment.comment_author}}</h5>
+            <div class="text-muted fst-italic mb-2">
+            {{comment.comment_date}}
+            <br>
+            </div>
+            {{comment.comment_content}}
+          </div>
+        </div>
+        {% endfor %}
+                                
+        {% else %}
+        <div class ="alert alert-danger">
+        Bu makaleye herhangi bir yorum yazılmamış,ilk yorum yapan siz olun!
+         </div>
+        {% endif %}
+
+
+        {% if request.user.is_authenticated %}
+
+        <div class="col-lg-8">
+        <section class="mb-5">
+        <form method = "post" action = "{% url 'article:comment' article.id %}"class="mb-5">
+         {% csrf_token %}
+        
+        <textarea name = "comment_content" class="form-control" rows="3" placeholder="Yorum Ekle"></textarea>
+        <br>
+        <button type = "submit" class= "btn btn-danger">Gönder</button>
+    
+        
+
+        </form>
+        
+        </section>
+        </div>
+        
+        {% else %}
+
+        <div class="col-lg-8">
+        <section class="mb-5">
+        <form method = "post" action = "{% url 'article:comment' article.id %}"class="mb-5">
+         {% csrf_token %}
+        <input name = "comment_author" type = "text" class="form-control" placeholder="isminizi giriniz"></input>
+        <br>
+        <textarea name = "comment_content" class="form-control" rows="3" placeholder="Yorum Ekle"></textarea>
+        <br>
+        <button type = "submit" class= "btn btn-danger">Gönder</button>
+    
+        
+
+        </form>
+        
+        </section>
+        </div>
+        {% endif %}
+        
+     
+                             
+{% endblock  %}

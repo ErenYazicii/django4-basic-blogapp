@@ -1,0 +1,40 @@
+<!--BOOTSTRAP 5 NAV BAR-->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}">YB BLOG</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">Hakkımızda </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'article:articles' %}">Makaleler </a>
+        </li>
+        
+      </ul>
+       <form class="d-flex">
+       <ul class = "navbar-nav ml-auto">
+       {% if request.user.is_authenticated %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'article:dashboard' %}">Kontrol Paneli </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'user:logout' %}">Çıkış Yap </a>
+          </li>
+        {% else %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'user:login' %}">Giriş Yap</a>
+          </li>
+        {% endif %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'user:register' %}">Kayıt Ol </a>
+          </li>
+           </ul>  
+
+       </form>
+    </div>
+  </div>
+</nav>
